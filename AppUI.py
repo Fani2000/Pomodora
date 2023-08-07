@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
+from TimerUI import Timer
+
+import time
 from os import path
 from os.path import join
 
@@ -11,19 +14,26 @@ class App:
     """
 
     def __init__(self):
-        app = tk.Tk()
+        self.app = tk.Tk()
         # app.geometry("%dx%d+%d+%d" % (450, 300, 50, -10))
-        app.title("Fani's pomodoro")
-        app.configure(background="red")
-        app.iconphoto(False, tk.PhotoImage(file="Fani.png"))
-        app.configure(pady=10, padx=20)
+        self.app.title("Fani's pomodoro")
+        self.app.configure(background="red")
+        self.app.iconphoto(False, tk.PhotoImage(file="Fani.png"))
+        self.app.configure(pady=10, padx=20)
+        self.app.resizable(False, False)
 
         self.add_label()
         self.add_project_field()
         self.input_label()
         self.button()
 
-        app.mainloop()
+        self.app.mainloop()
+
+    def handle_start(self):
+        print("Show a new Screen")
+        self.app.withdraw()
+        timer_screen = Timer()
+
 
     def button(self):
         style = ttk.Style()
@@ -36,9 +46,10 @@ class App:
         )
         timer_btn = ttk.Button(
             text="Start",
-            style="TButton"
+            style="TButton",
+            command=self.handle_start
         )
-        timer_btn.grid(column=0, row=5, sticky="e",columnspan=4)
+        timer_btn.grid(column=0, row=5, sticky="e", columnspan=4)
 
     def input_label(self):
         style = ttk.Style()
@@ -105,7 +116,9 @@ class App:
         heading = Font(size=16, weight="bold")
 
         style = ttk.Style()
-        style.configure("Label", font=heading, foreground="white", background="red")
+        style.configure("Label", font=heading,
+                        foreground="white", background="red")
 
-        label = ttk.Label(text="Welcome back, Fani", style="Label", padding=(10, 10))
+        label = ttk.Label(text="Welcome back, Fani",
+                          style="Label", padding=(10, 10))
         label.grid(row=0, column=0, columnspan=4)
